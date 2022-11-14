@@ -1,6 +1,6 @@
 # AI/DATA Project
 
-This project consists of creating an IA that recognises normal, legitimate unusual and illegitimate unusual activities.
+This project consists of creating an AI that recognises normal, legitimate unusual and illegitimate unusual activities.
 
 ## DATA Description
 
