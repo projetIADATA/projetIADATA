@@ -14,7 +14,7 @@ trainPath = "training_data/"
 trainFolders = ["syslog/", "kern.log/"]
 trainFiles = ["anormal_illegitime.txt", "anormal_legitime.txt", "normal.txt"]
 
-
+#formatage des SysLog
 def SysLogFormat(logString):
 	logString = [x for x in logString if x]
 	logYear = int(datetime.now().strftime("%Y"))
@@ -47,7 +47,7 @@ def SysLogFormat(logString):
 			"service":logService,
 			"message":logMessage}
 
-	
+#formatage des KernLog	
 def KernLogFormat(logString):
 	logString = [x for x in logString if x]
 	logYear = int(datetime.now().strftime("%Y"))
@@ -68,7 +68,7 @@ def KernLogFormat(logString):
 			"service":logService,
 			"message":logMessage}
 	
-
+#formatage des DpkgLog	
 def DpkgLogFormat(logString):
 	logTimeStamp = logString[0].replace("-", "/") + " " + logString[1]
 	logLevel = None
