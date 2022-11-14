@@ -13,6 +13,8 @@ In computing, a log file is used to store a history of events on a server, compu
 
 ### DATA Collect
 
+To collect our data, we made a python script that first formats our data and imports it into elasticSearch. Elascticsearch is designed to manage and support large volumes of data (several Tera of data if the infrastructure follows). The search functionalities are powerful, they allow predictive search, text search, synonym search.
+
 ## DATA Encryption
 
 
