@@ -2,6 +2,12 @@
 
 This project consists of creating an AI that recognises normal, legitimate unusual and illegitimate unusual activities.
 
+## Build with 
+
+- Python
+- Kibana
+- Elasticsearch
+
 ## DATA Description
 
 We chose to use the logs of our PC. Indeed, we have recovered logs present in the files:  
