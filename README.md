@@ -4,6 +4,13 @@ This project consists of creating an IA that recognises normal, legitimate unusu
 
 ## DATA Description
 
+We chose to use the logs of our PC. Indeed, we have recovered logs present in the files:  
+-dpkg.log
+-karn.log
+-sys.log
+
+In computing, a log file is used to store a history of events on a server, computer or application.
+
 ## DATA Encryption
 
 ## AI Training 
