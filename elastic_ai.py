@@ -2,6 +2,7 @@ from sklearn.neural_network import MLPClassifier
 from elasticsearch import Elasticsearch
 import sys
 import pandas as pd
+import numpy as np
 
 #normal, anormal légitime, anormal illégitime
 #(1, 0, 0)  (0, 1, 0)   (0, 0, 1)
@@ -41,6 +42,9 @@ def DataFilter(indexLines, train=False):
             line['SPT'] = 'None'
             line['DPT'] = 'None'
 
+        line['service'] = line['service'].split('[')[0].split(":")[0]
+        del line['message']
+
         for key in line:
             line[key] = key+"="+str(line[key])
         dataDump.append(line)
@@ -62,7 +66,7 @@ dataIndexes = ["kern.log", "syslog", "dpkg.log"]
 
 toTrainX = []
 toTrainY = []
-toAnalyze = []
+completeData = []
 
 client = Elasticsearch("http://10.78.120.44:9200")
 for index in dataIndexes:
@@ -78,9 +82,9 @@ for index in dataIndexes:
         resp = client.search(index=index, query={"match_all": {}}, size=500000, from_=i)
         if(resp['hits']['total']['value'] == 500000):
             i += 500000
-            toAnalyze.extend(DataFilter(resp['hits']['hits']))
+            completeData.extend(DataFilter(resp['hits']['hits']))
         else:
-            toAnalyze.extend(DataFilter(resp['hits']['hits']))
+            completeData.extend(DataFilter(resp['hits']['hits']))
             break
 
 
@@ -101,14 +105,30 @@ for index in trainIndexes:
             break
 
 
-toTrainX = pd.DataFrame(toTrainX)
-print(toTrainX)
-toTrainX = pd.get_dummies(toTrainX) #columns=['log-level', 'system', 'service', 'message', 'IN', 'SRC', 'DST', 'LEN', 'PROTO', 'SPT', 'DPT']
+loglevel_columns = ['log-level_log-level=None', 'log-level_log-level=info', 'log-level_log-level=warn', 'log-level_log-level=error']
+system_columns = ['system_system=None', 'system_system=configure', 'system_system=install', 'system_system=pop-os', 'system_system=startup', 'system_system=status', 'system_system=trigproc']
+IN_columns = ['IN_IN=None', 'IN_IN=eno1']
+SRC_columns = ['SRC_SRC=None', 'SRC_SRC=EXTERNAL', 'SRC_SRC=INTERNAL']
+DST_columns = ['DST_DST=None', 'DST_DST=EXTERNAL', 'DST_DST=INTERNAL']
+LEN_columns = ['LEN_LEN=None'] + ['LEN_LEN='+str(i) for i in range(1500)]
+PROTO_columns = ['PROTO_PROTO=None', 'PROTO_PROTO=TCP', 'PROTO_PROTO=UDP']
+SPT_columns = ['SPT_SPT=None'] + ['SPT_SPT='+str(i) for i in range(65535 + 1)]
+DPT_columns = ['DPT_DPT=None'] + ['DPT_DPT='+str(i) for i in range(65535 + 1)]
+
+completeData = pd.DataFrame(completeData)
+dataColumns = completeData.columns.values.tolist()
+
+fullColumns = list(set(dataColumns + loglevel_columns + system_columns + IN_columns + SRC_columns + DST_columns + LEN_columns + PROTO_columns + SPT_columns + DPT_columns))
+emptyDf = pd.DataFrame(columns = fullColumns)
+
+toTrainX = pd.concat([pd.DataFrame(toTrainX),emptyDf], axis=0, ignore_index=True).replace({np.nan: None})
+# print(toTrainX)
+toTrainX = pd.get_dummies(toTrainX) #columns=['log-level', 'system', 'service', 'IN', 'SRC', 'DST', 'LEN', 'PROTO', 'SPT', 'DPT']
 print(toTrainX)
 
 mlp = MLPClassifier(random_state=1, max_iter=300).fit(toTrainX, toTrainY)
 
-toAnalyze = pd.DataFrame(toAnalyze)
-print(toAnalyze)
-toAnalyze = pd.get_dummies(toAnalyze) #columns=['log-level', 'system', 'service', 'message', 'IN', 'SRC', 'DST', 'LEN', 'PROTO', 'SPT', 'DPT']
+toAnalyze = pd.concat([pd.DataFrame(completeData),emptyDf], axis=0, ignore_index=True).replace({np.nan: None})
+# print(toAnalyze)
+toAnalyze = pd.get_dummies(toAnalyze) #columns=['log-level', 'system', 'service', 'IN', 'SRC', 'DST', 'LEN', 'PROTO', 'SPT', 'DPT']
 print(toAnalyze)
