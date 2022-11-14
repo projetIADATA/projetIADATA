@@ -16,7 +16,6 @@ In computing, a log file is used to store a history of events on a server, compu
 To collect our data, we made a python script named "elastic_data.py" that first formats our data and imports it into elasticSearch. Elascticsearch is designed to manage and support large volumes of data (several Tera of data if the infrastructure follows). The search functionalities are powerful, they allow predictive search, text search, synonym search.
 
 ```yaml
-
 def SysLogFormat(logString):
 	logString = [x for x in logString if x]
 	logYear = int(datetime.now().strftime("%Y"))
@@ -48,8 +47,6 @@ def SysLogFormat(logString):
 			"system":logSystem, 
 			"service":logService,
 			"message":logMessage}
-
-
 ```
 
 
