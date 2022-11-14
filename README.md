@@ -6,7 +6,7 @@ This project consists of creating an IA that recognises normal, legitimate unusu
 
 ## DATA Encryption
 
-### AI Training 
+## AI Training 
 
 [titre de l'image](./pics/image.png)
 
