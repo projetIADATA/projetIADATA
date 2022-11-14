@@ -105,30 +105,38 @@ for index in trainIndexes:
             break
 
 
-loglevel_columns = ['log-level_log-level=None', 'log-level_log-level=info', 'log-level_log-level=warn', 'log-level_log-level=error']
-system_columns = ['system_system=None', 'system_system=configure', 'system_system=install', 'system_system=pop-os', 'system_system=startup', 'system_system=status', 'system_system=trigproc']
-IN_columns = ['IN_IN=None', 'IN_IN=eno1']
-SRC_columns = ['SRC_SRC=None', 'SRC_SRC=EXTERNAL', 'SRC_SRC=INTERNAL']
-DST_columns = ['DST_DST=None', 'DST_DST=EXTERNAL', 'DST_DST=INTERNAL']
-LEN_columns = ['LEN_LEN=None'] + ['LEN_LEN='+str(i) for i in range(1500)]
-PROTO_columns = ['PROTO_PROTO=None', 'PROTO_PROTO=TCP', 'PROTO_PROTO=UDP']
-SPT_columns = ['SPT_SPT=None'] + ['SPT_SPT='+str(i) for i in range(65535 + 1)]
-DPT_columns = ['DPT_DPT=None'] + ['DPT_DPT='+str(i) for i in range(65535 + 1)]
+# loglevel_columns = ['log-level_log-level=None', 'log-level_log-level=info', 'log-level_log-level=warn', 'log-level_log-level=error']
+# system_columns = ['system_system=None', 'system_system=configure', 'system_system=install', 'system_system=pop-os', 'system_system=startup', 'system_system=status', 'system_system=trigproc']
+# IN_columns = ['IN_IN=None', 'IN_IN=eno1']
+# SRC_columns = ['SRC_SRC=None', 'SRC_SRC=EXTERNAL', 'SRC_SRC=INTERNAL']
+# DST_columns = ['DST_DST=None', 'DST_DST=EXTERNAL', 'DST_DST=INTERNAL']
+# LEN_columns = ['LEN_LEN=None'] + ['LEN_LEN='+str(i) for i in range(1500)]
+# PROTO_columns = ['PROTO_PROTO=None', 'PROTO_PROTO=TCP', 'PROTO_PROTO=UDP']
+# SPT_columns = ['SPT_SPT=None'] + ['SPT_SPT='+str(i) for i in range(65535 + 1)]
+# DPT_columns = ['DPT_DPT=None'] + ['DPT_DPT='+str(i) for i in range(65535 + 1)]
 
+toTrainX = pd.DataFrame(toTrainX)
 completeData = pd.DataFrame(completeData)
 dataColumns = completeData.columns.values.tolist()
 
-fullColumns = list(set(dataColumns + loglevel_columns + system_columns + IN_columns + SRC_columns + DST_columns + LEN_columns + PROTO_columns + SPT_columns + DPT_columns))
+# fullColumns = list(set(dataColumns + loglevel_columns + system_columns + IN_columns + SRC_columns + DST_columns + LEN_columns + PROTO_columns + SPT_columns + DPT_columns))
+fullColumns = pd.concat([pd.get_dummies(toTrainX),pd.get_dummies(completeData)], axis=0, ignore_index=True).columns.values.tolist()
 emptyDf = pd.DataFrame(columns = fullColumns)
+print(len(fullColumns))
+print(emptyDf.info())
 
-toTrainX = pd.concat([pd.DataFrame(toTrainX),emptyDf], axis=0, ignore_index=True).replace({np.nan: None})
 # print(toTrainX)
+# print(toAnalyze)
+
 toTrainX = pd.get_dummies(toTrainX) #columns=['log-level', 'system', 'service', 'IN', 'SRC', 'DST', 'LEN', 'PROTO', 'SPT', 'DPT']
+toAnalyze = pd.get_dummies(completeData) #columns=['log-level', 'system', 'service', 'IN', 'SRC', 'DST', 'LEN', 'PROTO', 'SPT', 'DPT']
+
+toTrainX = pd.concat([emptyDf,pd.DataFrame(toTrainX)], axis=0, ignore_index=True).replace({np.nan: 0})
+toAnalyze = pd.concat([emptyDf,pd.DataFrame(toAnalyze)], axis=0, ignore_index=True).replace({np.nan: 0}) 
+
+print(toTrainX.info())
+print(toAnalyze.info())
 print(toTrainX)
+print(toTrainY)
 
 mlp = MLPClassifier(random_state=1, max_iter=300).fit(toTrainX, toTrainY)
-
-toAnalyze = pd.concat([pd.DataFrame(completeData),emptyDf], axis=0, ignore_index=True).replace({np.nan: None})
-# print(toAnalyze)
-toAnalyze = pd.get_dummies(toAnalyze) #columns=['log-level', 'system', 'service', 'IN', 'SRC', 'DST', 'LEN', 'PROTO', 'SPT', 'DPT']
-print(toAnalyze)
