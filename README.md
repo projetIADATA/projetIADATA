@@ -14,3 +14,9 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+[titre de l'image](./pics/image.png)
+
+| titre | argument | blabla |
+| :---: | ---: | :--- |
+| truc 1 | truc 2 | truc 3|
