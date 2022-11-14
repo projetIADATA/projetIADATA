@@ -1,5 +1,8 @@
 # AI/DATA Project
 
+This project consists of creating an IA that recognises normal, legitimate unusual and illegitimate unusual activities.
+
+# AI/DATA Project
 <!--
 **projetIADATA/projetIADATA** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
