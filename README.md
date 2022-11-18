@@ -62,7 +62,7 @@ The search functionalities are powerful, they allow predictive search, text sear
 
 Kern.log
 
-![](file:/./)
+![](file:/kernlog pictures/unfiltered.png)
 
 The transformation of our Kern.log
 
@@ -93,7 +93,7 @@ def KernLogFormat(logString):
 | log-level | system | service | IN  | SRC | DST | PROTO | SPT | DPT | LEN |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-![](file:///C:/Users/Santiago/AppData/Roaming/marktext/images/2022-11-18-16-46-57-image.png?msec=1668786421166)
+![](file:/kernlog pitures/filtered.png)
 
 ## **AI Training**
 
@@ -132,11 +132,13 @@ A multilayer perceptron is a fully connected class of feedforward **artificial n
 ```yaml
 from sklearn.neural_network import MLPClassifier
 ```
-
 We are using the multi-layer perceptron classifier.
+
+![](file:/kernlog pictures/mlp.png)
 
 ```yarn
 mlp = MLPClassifier(random_state=1, max_iter=300).fit(toTrainX, toTrainY)
 ```
 
 It allows to train the generated dataset and therefore decide the traffic results through artificial intelligence.
+
