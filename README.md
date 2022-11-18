@@ -93,7 +93,7 @@ def KernLogFormat(logString):
 | log-level | system | service | IN  | SRC | DST | PROTO | SPT | DPT | LEN |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-![](file:/kernlog pitures/filtered.png)
+![]([file:/kernlog pitures/filtered.png])
 
 ## **AI Training**
 
@@ -133,6 +133,7 @@ A multilayer perceptron is a fully connected class of feedforward **artificial n
 from sklearn.neural_network import MLPClassifier
 ```
 We are using the multi-layer perceptron classifier.
+
 
 ![](file:/kernlog pictures/mlp.png)
 
