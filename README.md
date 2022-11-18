@@ -18,7 +18,7 @@ This project consists of Multi Layer Perceptron (MLP), generating training data,
 
 ## Data Description
 
-We were tasked to use the logs of our PC and we have recovered these logs present in our system files ( directory: * var/log* ) :
+We were tasked to use the logs of our PC and we have recovered these logs present in our system files ( directory: /var/log ) :
 
 - dpkg.log
 - kern.log
@@ -64,7 +64,7 @@ Kern.log
 
 ![](https://github.com/projetIADATA/projetIADATA/blob/main/kernlog%20pictures/unfiltered.png)
 
-The transformation of our Kern.log
+#### The transformation of our Kern.log
 
 ```yarn
 def KernLogFormat(logString):
