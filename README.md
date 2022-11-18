@@ -62,7 +62,7 @@ The search functionalities are powerful, they allow predictive search, text sear
 
 Kern.log
 
-![](file:/kernlog pictures/unfiltered.png)
+![](https://github.com/projetIADATA/projetIADATA/blob/main/kernlog%20pictures/unfiltered.png)
 
 The transformation of our Kern.log
 
@@ -93,7 +93,7 @@ def KernLogFormat(logString):
 | log-level | system | service | IN  | SRC | DST | PROTO | SPT | DPT | LEN |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-![]([file:/kernlog pitures/filtered.png])
+![](https://github.com/projetIADATA/projetIADATA/blob/main/kernlog%20pictures/filtered.png)
 
 ## **AI Training**
 
@@ -135,7 +135,7 @@ from sklearn.neural_network import MLPClassifier
 We are using the multi-layer perceptron classifier.
 
 
-![](file:/kernlog pictures/mlp.png)
+![](https://github.com/projetIADATA/projetIADATA/blob/main/kernlog%20pictures/mlp.png)
 
 ```yarn
 mlp = MLPClassifier(random_state=1, max_iter=300).fit(toTrainX, toTrainY)
