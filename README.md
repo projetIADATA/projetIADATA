@@ -34,7 +34,7 @@ In order to have abnormal legitimate traffic, we have generated nmaps and pings 
 
 To collect our data, we made a python script named "elastic_data.py" that first formats our data and imports it into elasticSearch.
 
-```yarn
+```yaml
 from elasticsearch import Elasticsearch
 from datetime import datetime
 import json
@@ -66,7 +66,7 @@ Kern.log
 
 #### The transformation of our Kern.log
 
-```yarn
+```yaml
 def KernLogFormat(logString):
 	logString = [x for x in logString if x]
 	logYear = int(datetime.now().strftime("%Y"))
@@ -137,7 +137,7 @@ We are using the multi-layer perceptron classifier.
 
 ![](https://github.com/projetIADATA/projetIADATA/blob/main/kernlog%20pictures/mlp.png)
 
-```yarn
+```yaml
 mlp = MLPClassifier(random_state=1, max_iter=300).fit(toTrainX, toTrainY)
 ```
 
